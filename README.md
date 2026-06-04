@@ -1,5 +1,11 @@
 # homelab-infrastructure
 
+![Terraform](https://img.shields.io/badge/Terraform-1.7+-7B42BC?logo=terraform&logoColor=white)
+![Ansible](https://img.shields.io/badge/Ansible-2.15+-EE0000?logo=ansible&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
+![KVM](https://img.shields.io/badge/KVM-libvirt-F05032?logo=linux&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 Infrastructure-as-Code for a self-hosted home lab running on KVM/libvirt (Ubuntu 26.04).  
 Manages VMs, services, and networking through Terraform, Ansible, and Docker Compose.
 
