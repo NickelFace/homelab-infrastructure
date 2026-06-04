@@ -1,0 +1,6 @@
+# Copy to terraform.tfvars and fill in your values
+# terraform.tfvars is git-ignored — never commit secrets
+
+libvirt_uri  = "qemu:///system"
+network_name = "default"
+ssh_pubkey   = "ssh-ed25519 AAAA... your-key-here"

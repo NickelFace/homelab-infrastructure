@@ -1,0 +1,30 @@
+---
+- name: Apply base hardening to all VMs
+  hosts: all_vms
+  become: true
+  roles:
+    - common
+
+- name: Configure Samba Active Directory DC
+  hosts: domain_controllers
+  become: true
+  roles:
+    - samba_ad
+
+- name: Configure mail stack
+  hosts: mail_servers
+  become: true
+  roles:
+    - postfix_dovecot
+
+- name: Configure Nginx reverse proxy
+  hosts: proxies
+  become: true
+  roles:
+    - nginx
+
+- name: Configure ZeroTier on all hosts
+  hosts: all_vms
+  become: true
+  roles:
+    - zerotier
