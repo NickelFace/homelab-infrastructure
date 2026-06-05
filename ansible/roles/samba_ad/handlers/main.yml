@@ -1,0 +1,5 @@
+---
+- name: Restart samba-ad-dc
+  service:
+    name: samba-ad-dc
+    state: restarted

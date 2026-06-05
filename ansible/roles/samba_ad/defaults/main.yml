@@ -1,0 +1,5 @@
+---
+samba_realm: "HOME.LAB"
+samba_domain: "HOME"
+samba_admin_password: "changeme123!"
+samba_dns_backend: "SAMBA_INTERNAL"
