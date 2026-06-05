@@ -1,0 +1,92 @@
+---
+- name: Install Postfix and Dovecot packages
+  apt:
+    name:
+      - postfix
+      - dovecot-core
+      - dovecot-imapd
+      - dovecot-lmtpd
+      - mailutils
+    state: present
+
+- name: Configure Postfix main.cf
+  lineinfile:
+    path: /etc/postfix/main.cf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: "^myhostname",             line: "myhostname = {{ mail_hostname }}" }
+    - { regexp: "^mydomain",               line: "mydomain = {{ mail_domain }}" }
+    - { regexp: "^myorigin",               line: "myorigin = $mydomain" }
+    - { regexp: "^inet_interfaces",        line: "inet_interfaces = all" }
+    - { regexp: "^mydestination",          line: "mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain" }
+    - { regexp: "^mailbox_transport",      line: "mailbox_transport = lmtp:unix:private/dovecot-lmtp" }
+    - { regexp: "^smtpd_sasl_type",        line: "smtpd_sasl_type = dovecot" }
+    - { regexp: "^smtpd_sasl_path",        line: "smtpd_sasl_path = private/auth" }
+    - { regexp: "^smtpd_sasl_auth_enable", line: "smtpd_sasl_auth_enable = yes" }
+    - { regexp: "^smtpd_tls_security_level", line: "smtpd_tls_security_level = may" }
+  notify: Restart postfix
+
+- name: Configure Dovecot auth mechanisms
+  copy:
+    dest: /etc/dovecot/conf.d/10-auth.conf
+    content: |
+      auth_mechanisms = plain login
+      !include auth-system.conf.ext
+    mode: "0644"
+  notify: Restart dovecot
+
+- name: Set Dovecot mail location to Maildir
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-mail.conf
+    regexp: "^mail_location"
+    line: "mail_location = maildir:~/Maildir"
+  notify: Restart dovecot
+
+- name: Configure Dovecot LMTP and auth sockets for Postfix
+  copy:
+    dest: /etc/dovecot/conf.d/10-master.conf
+    content: |
+      service imap-login {
+        inet_listener imap  { port = 143 }
+        inet_listener imaps { port = 993 ssl = yes }
+      }
+      service lmtp {
+        unix_listener /var/spool/postfix/private/dovecot-lmtp {
+          mode = 0600
+          user = postfix
+          group = postfix
+        }
+      }
+      service auth {
+        unix_listener /var/spool/postfix/private/auth {
+          mode = 0660
+          user = postfix
+          group = postfix
+        }
+      }
+    mode: "0644"
+  notify: Restart dovecot
+
+- name: Enable and start Postfix
+  service:
+    name: postfix
+    state: started
+    enabled: true
+
+- name: Enable and start Dovecot
+  service:
+    name: dovecot
+    state: started
+    enabled: true
+
+- name: Allow mail ports through UFW
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - "25"
+    - "143"
+    - "587"
+    - "993"
