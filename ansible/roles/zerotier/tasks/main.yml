@@ -1,0 +1,29 @@
+---
+- name: Download ZeroTier install script
+  get_url:
+    url: https://install.zerotier.com
+    dest: /tmp/zerotier_install.sh
+    mode: "0700"
+
+- name: Install ZeroTier
+  command: /tmp/zerotier_install.sh
+  args:
+    creates: /usr/sbin/zerotier-one
+
+- name: Enable and start zerotier-one
+  service:
+    name: zerotier-one
+    state: started
+    enabled: true
+
+- name: Join ZeroTier network
+  command: zerotier-cli join {{ zerotier_network_id }}
+  when: zerotier_network_id != ""
+  register: zt_join
+  changed_when: "'200 join OK' in zt_join.stdout"
+
+- name: Allow ZeroTier UDP port through UFW
+  ufw:
+    rule: allow
+    port: "9993"
+    proto: udp
