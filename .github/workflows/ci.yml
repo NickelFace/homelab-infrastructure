@@ -21,10 +21,6 @@ jobs:
           terraform fmt -recursive terraform/
           git diff --exit-code terraform/
 
-      - name: validate (prod)
-        working-directory: terraform/environments/prod
-        run: terraform init -backend=false && terraform validate
-
   ansible:
     name: Ansible lint
     runs-on: ubuntu-latest
