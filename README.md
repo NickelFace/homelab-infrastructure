@@ -1,5 +1,6 @@
 # homelab-infrastructure
 
+[![CI](https://github.com/NickelFace/homelab-infrastructure/actions/workflows/ci.yml/badge.svg)](https://github.com/NickelFace/homelab-infrastructure/actions/workflows/ci.yml)
 ![Terraform](https://img.shields.io/badge/Terraform-1.7+-7B42BC?logo=terraform&logoColor=white)
 ![Ansible](https://img.shields.io/badge/Ansible-2.15+-EE0000?logo=ansible&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
