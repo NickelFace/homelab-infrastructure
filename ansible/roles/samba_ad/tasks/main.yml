@@ -66,17 +66,17 @@
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
   loop:
-    - { port: "53",   proto: "tcp" }
-    - { port: "53",   proto: "udp" }
-    - { port: "88",   proto: "tcp" }
-    - { port: "88",   proto: "udp" }
-    - { port: "135",  proto: "tcp" }
-    - { port: "139",  proto: "tcp" }
-    - { port: "389",  proto: "tcp" }
-    - { port: "389",  proto: "udp" }
-    - { port: "445",  proto: "tcp" }
-    - { port: "464",  proto: "tcp" }
-    - { port: "464",  proto: "udp" }
-    - { port: "636",  proto: "tcp" }
-    - { port: "3268", proto: "tcp" }
-    - { port: "3269", proto: "tcp" }
+    - {port: "53", proto: "tcp"}
+    - {port: "53", proto: "udp"}
+    - {port: "88", proto: "tcp"}
+    - {port: "88", proto: "udp"}
+    - {port: "135", proto: "tcp"}
+    - {port: "139", proto: "tcp"}
+    - {port: "389", proto: "tcp"}
+    - {port: "389", proto: "udp"}
+    - {port: "445", proto: "tcp"}
+    - {port: "464", proto: "tcp"}
+    - {port: "464", proto: "udp"}
+    - {port: "636", proto: "tcp"}
+    - {port: "3268", proto: "tcp"}
+    - {port: "3269", proto: "tcp"}

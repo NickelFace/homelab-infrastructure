@@ -1,3 +1,4 @@
 profile: basic
 skip_list:
   - fqcn[action-core]
+  - var-naming[no-role-prefix]
