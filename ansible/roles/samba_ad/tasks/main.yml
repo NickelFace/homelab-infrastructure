@@ -1,4 +1,9 @@
 ---
+- name: Assert samba_admin_password is set
+  assert:
+    that: samba_admin_password | length > 0
+    fail_msg: "samba_admin_password must be set — use: ansible-vault encrypt_string 'YourPassword' --name samba_admin_password"
+
 - name: Install Samba AD packages
   apt:
     name:

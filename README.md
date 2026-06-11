@@ -27,7 +27,6 @@ Manages VMs, services, and networking through Terraform, Ansible, and Docker Com
 | Nginx | Reverse proxy with TLS termination |
 | Prometheus + Grafana | Metrics and dashboards |
 | ZeroTier | Site-to-site and remote access VPN |
-| NFS | Network storage over LVM volumes |
 
 ## Repository Layout
 
@@ -35,11 +34,9 @@ Manages VMs, services, and networking through Terraform, Ansible, and Docker Com
 .
 ├── terraform/
 │   ├── modules/
-│   │   ├── vm/          # KVM virtual machine module
-│   │   └── network/     # libvirt network definitions
+│   │   └── vm/          # KVM virtual machine module
 │   └── environments/
-│       ├── prod/        # Production VMs
-│       └── dev/         # Dev/lab VMs
+│       └── prod/        # Production VMs
 ├── ansible/
 │   ├── inventory/       # Host definitions
 │   ├── playbooks/       # Top-level plays
@@ -50,9 +47,7 @@ Manages VMs, services, and networking through Terraform, Ansible, and Docker Com
 │       ├── nginx/       # Reverse proxy
 │       └── zerotier/    # ZeroTier node setup
 ├── docker/
-│   ├── nginx-proxy/     # Nginx + Certbot Compose stack
-│   ├── monitoring/      # Prometheus + Grafana + Alertmanager
-│   └── mail/            # Postfix + Dovecot (containerised variant)
+│   └── monitoring/      # Prometheus + Grafana + Alertmanager
 └── docs/
     └── architecture.md  # Network diagram and design notes
 ```
@@ -64,13 +59,15 @@ Manages VMs, services, and networking through Terraform, Ansible, and Docker Com
 git clone https://github.com/NickelFace/homelab-infrastructure
 cd homelab-infrastructure
 
-# 2. Provision a dev VM
-cd terraform/environments/dev
+# 2. Provision VMs
+cd terraform/environments/prod
 cp terraform.tfvars.example terraform.tfvars   # fill in your values
 terraform init && terraform apply
 
-# 3. Configure it
+# 3. Configure hosts
 cd ../../ansible
+# Set the Samba admin password via vault before running:
+# ansible-vault encrypt_string 'YourPassword' --name samba_admin_password >> roles/samba_ad/vars/vault.yml
 ansible-playbook -i inventory/hosts.yml playbooks/site.yml
 ```
 
