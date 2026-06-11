@@ -38,6 +38,10 @@ jobs:
       - name: Install ansible-lint
         run: pip install ansible-lint
 
+      - name: Install Ansible collections
+        working-directory: ansible
+        run: ansible-galaxy collection install community.general
+
       - name: Lint
         working-directory: ansible
         run: ansible-lint playbooks/

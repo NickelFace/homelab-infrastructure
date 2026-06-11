@@ -15,16 +15,16 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   loop:
-    - { regexp: "^myhostname",             line: "myhostname = {{ mail_hostname }}" }
-    - { regexp: "^mydomain",               line: "mydomain = {{ mail_domain }}" }
-    - { regexp: "^myorigin",               line: "myorigin = $mydomain" }
-    - { regexp: "^inet_interfaces",        line: "inet_interfaces = all" }
-    - { regexp: "^mydestination",          line: "mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain" }
-    - { regexp: "^mailbox_transport",      line: "mailbox_transport = lmtp:unix:private/dovecot-lmtp" }
-    - { regexp: "^smtpd_sasl_type",        line: "smtpd_sasl_type = dovecot" }
-    - { regexp: "^smtpd_sasl_path",        line: "smtpd_sasl_path = private/auth" }
-    - { regexp: "^smtpd_sasl_auth_enable", line: "smtpd_sasl_auth_enable = yes" }
-    - { regexp: "^smtpd_tls_security_level", line: "smtpd_tls_security_level = may" }
+    - {regexp: "^myhostname", line: "myhostname = {{ mail_hostname }}"}
+    - {regexp: "^mydomain", line: "mydomain = {{ mail_domain }}"}
+    - {regexp: "^myorigin", line: "myorigin = $mydomain"}
+    - {regexp: "^inet_interfaces", line: "inet_interfaces = all"}
+    - {regexp: "^mydestination", line: "mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain"}
+    - {regexp: "^mailbox_transport", line: "mailbox_transport = lmtp:unix:private/dovecot-lmtp"}
+    - {regexp: "^smtpd_sasl_type", line: "smtpd_sasl_type = dovecot"}
+    - {regexp: "^smtpd_sasl_path", line: "smtpd_sasl_path = private/auth"}
+    - {regexp: "^smtpd_sasl_auth_enable", line: "smtpd_sasl_auth_enable = yes"}
+    - {regexp: "^smtpd_tls_security_level", line: "smtpd_tls_security_level = may"}
   notify: Restart postfix
 
 - name: Configure Dovecot auth mechanisms

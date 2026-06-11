@@ -16,8 +16,8 @@ resource "libvirt_volume" "os_disk" {
 }
 
 resource "libvirt_cloudinit_disk" "init" {
-  name      = "${var.name}-init.iso"
-  pool      = var.storage_pool
+  name = "${var.name}-init.iso"
+  pool = var.storage_pool
   user_data = templatefile("${path.module}/cloud-init.tpl", {
     hostname   = var.name
     ssh_pubkey = var.ssh_pubkey
