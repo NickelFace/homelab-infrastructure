@@ -17,7 +17,9 @@ jobs:
           terraform_version: "~1.7"
 
       - name: fmt check
-        run: terraform fmt -check -recursive terraform/
+        run: |
+          terraform fmt -recursive terraform/
+          git diff --exit-code terraform/
 
       - name: validate (prod)
         working-directory: terraform/environments/prod
